@@ -12,10 +12,14 @@ pipeline {
                 sh "ls" 
             }
         }
+        stage('Post Build') { 
+            steps {
+                archiveArtifacts artifacts: '*/*.war', followSymlinks: false
+            }
+        }
         stage('Deploy') { 
             steps {
-                sh "pwd"
-                sh "echo fin" 
+                deploy adapters: [tomcat9(credentialsId: 'Jenkis.git2', path: '', url: 'http://www.localhost:8080/')], contextPath: '/spark', onFailure: false, war: 'target/*.war'
             }
         }
     }
