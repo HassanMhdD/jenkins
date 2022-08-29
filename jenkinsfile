@@ -19,8 +19,8 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'Jenkis.git2', path: '', url: 'http://www.localhost:8080/')], contextPath: '/spark', onFailure: false, war: 'target/*.war'
-            }
+         	sh "cp target/*.war /var/lib/jenkins/deploy/spark.war"   
+	}
         }
     }
 }
